@@ -1,6 +1,7 @@
 package com.wisdom.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,20 @@ public class ClazzController {
 		map.put("total", claPage.getTotalElements());
 		map.put("rows", claPage.getContent());
 		return map;
+	}
+	@RequestMapping("/selectAll")
+	public List<Classes> selectAll(){
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		Sort sort = new Sort(Direction.ASC	, "id");
+//		Pageable pager =  new PageRequest(page-1, rows, sort);
+//		Page<Classes> claPage = service.findByName("%"+name+"%",pager);
+//		map.put("total", claPage.getTotalElements());
+//		map.put("rows", claPage.getContent());
+		
+		List<Classes> list= service.getAll();
+
+		System.out.println("sdfsdf"+list);
+		return list;
 	}
 	
 	/**

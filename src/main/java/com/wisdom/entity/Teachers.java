@@ -3,12 +3,7 @@ package com.wisdom.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="Teachers")
@@ -48,6 +43,18 @@ public class Teachers implements Serializable {
 	@Column(columnDefinition="int NOT NULL comment '备注：头像'")
 	private int pictureId;
 	@Column(columnDefinition="varchar (50) comment '备注：备注'")
+
+	@Transient
+	private String code;
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	private String mark;
 	public int getId() {
 		return id;

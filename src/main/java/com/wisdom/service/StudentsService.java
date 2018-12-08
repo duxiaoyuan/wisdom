@@ -38,4 +38,6 @@ public interface StudentsService {
 	 * 锁定用户
 	 */
 	int suo(Integer id);
+	
+	
 }

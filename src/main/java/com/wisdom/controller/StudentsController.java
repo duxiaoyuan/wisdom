@@ -1,20 +1,26 @@
 package com.wisdom.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.wisdom.dao.StudentRepository;
 import com.wisdom.entity.Students;
+import com.wisdom.entity.colletion.StudentCollection;
 import com.wisdom.entity.condittion.StudentsCondittion;
 import com.wisdom.service.StudentsService;
+
+import com.wisdom.tools.Result;
+import com.wisdom.util.PoiUtils;
 
 /**
  * 学生
@@ -41,7 +47,15 @@ public class StudentsController {
 	@RequestMapping("/addstu")
 	public Map<String, Object> addstu(Students stu) {
 
+		if(stu.getId()==null) {
+			
+			String stuNo = stu.getStudentNo();
+			String pass=stuNo.substring(stuNo.length()-6,stuNo.length());
+			stu.setPassword(pass);
+			
+		}
 		Students s = stuvice.addstu(stu);
+		System.out.println("成功后的学生"+s);
 		int a = s.getId();
 		if (a > 0) {
 			map.put("success", true);
@@ -128,5 +142,61 @@ public class StudentsController {
 				return map;
 			}
 		}
+	}
+	/**
+	 * 导入学生信息
+	 * @param myfile
+	 * @return
+	 */
+	@RequestMapping(value = "/readExcel")
+	public Result readExcel(@RequestParam("uploadfile") MultipartFile uploadfile) {
+		
+		String name = uploadfile.getName();// form表单中参数名称
+		String originalFilename = uploadfile.getOriginalFilename();// 得到上传文件的名称
+		System.out.println("表单中文件参数名称 name=>" + name);
+		System.out.println("上传的文件原始名称 originalfileName=>" + originalFilename);
+		List<String> errorList = new ArrayList<>();
+		int n = 0;
+		PoiUtils poiUtils = new PoiUtils();// Excel工具类
+
+		List<StudentCollection> list = null;
+		List<Students>	passList = null;
+		try {
+			list = (List<StudentCollection>) poiUtils.parseExcel(StudentCollection.class, uploadfile.getInputStream(), originalFilename);
+			System.out.println("stuList=>"+list);
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		for (StudentCollection stu : list) {
+			Students students = new Students();
+			students.setName(stu.getName());
+			students.setAge(stu.getAge());
+			students.setSex(stu.getSex());
+			students.setBirthday(stu.getBirthday());
+			students.setAddress(stu.getAddress());
+			students.setStudentNo(stu.getStudentNo());
+			String pass=stu.getStudentNo().substring(stu.getStudentNo().length()-6,stu.getStudentNo().length());
+			stu.setPassword(pass);
+			try {
+				System.out.println("students=>"+students);
+				n++;
+				passList.add(stuvice.addstu(students));
+			} catch (Exception e) {
+				System.out.println("fstu=>"+students);
+				errorList.add(stu.getName());
+				//e.printStackTrace();
+			}
+		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(errorList.size()>0) {
+			map.put("success",true);
+			map.put("error",errorList);
+		}else {
+			map.put("success",false);
+			map.put("error",errorList);
+		}
+		
+		return new Result(1, n + "条信息添加成功", map);
 	}
 }

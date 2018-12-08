@@ -21,6 +21,8 @@ public interface StudentRepository extends JpaRepository<Students, Integer>,JpaS
 	    @Transactional
 	    @Query(value = "update students set is_lock=1 where id=?1", nativeQuery = true)
 	    public int suo(Integer id);
+	    
+	    
 	    /**
 	     * 解锁用户
 	     * @param id

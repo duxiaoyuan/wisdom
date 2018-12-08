@@ -57,7 +57,7 @@ public class CourseController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		if(course.getName()==null) {
-			course.setProfessionId(2);
+		/*	course.setProfessionId(2);*/
 			Course addCourse = service.insertCourse(course);
 			
 		}

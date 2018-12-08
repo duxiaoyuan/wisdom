@@ -36,7 +36,7 @@ public class Students implements Serializable {
 	private String address;
 	@Column(columnDefinition="varchar (50) NOT NULL comment '备注：学号 '")
 	private String studentNo;
-	@Column(columnDefinition="varchar (50) NOT NULL comment '备注：密码 '")
+	@Column(columnDefinition="varchar (50) NULL comment '备注：密码 '")
 	private String password;
 	@Column(columnDefinition="varchar (50) comment '备注：手机号 '")
 	private String telphone;

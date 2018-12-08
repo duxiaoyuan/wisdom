@@ -21,24 +21,24 @@ public class College implements Serializable {
 	@GeneratedValue
 	@OrderBy
 	@Column(columnDefinition="int unsigned NOT NULL comment '备注:自动编号'")
-	private int id;
+	private Integer id;
 	@Column(columnDefinition="varchar (50) NOT NULL comment '备注:学院代码'")
-	private String colegeNo;
+	private String collegeNo;
 	@Column(columnDefinition="varchar (50) NOT NULL comment '备注:学院名称'")
 	private String name;
 	@Column(columnDefinition="varchar (50) comment '备注:备注'")
 	private String mark;
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getColegeNo() {
-		return colegeNo;
+	public String getCollegeNo() {
+		return collegeNo;
 	}
-	public void setColegeNo(String colegeNo) {
-		this.colegeNo = colegeNo;
+	public void setCollegeNo(String collegeNo) {
+		this.collegeNo = collegeNo;
 	}
 	public String getName() {
 		return name;
@@ -46,15 +46,22 @@ public class College implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getmark() {
+//	public String getMark() {
+//		return mark;
+//	}
+//	public void setMark(String mark) {
+//		this.mark = mark;
+//	}
+	public String getMark() {
 		return mark;
 	}
-	public void setmark(String mark) {
-		mark = mark;
+	public void setMark(String mark) {
+		this.mark = mark;
 	}
+	
 	@Override
 	public String toString() {
-		return "College [id=" + id + ", colegeNo=" + colegeNo + ", name=" + name + ", mark=" + mark + "]";
+		return "College [id=" + id + ", collegeNo=" + collegeNo + ", name=" + name + ", mark=" + mark + "]";
 	}
 	
 	

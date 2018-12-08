@@ -45,6 +45,13 @@ public class Result {
 		this.data = data;
 	}
 
+	public Result(Integer state, String msg, Object data) {
+		super();
+		this.state = state;
+		this.msg = msg;
+		this.data = data;
+	}
+
 	/**
 	 * 响应失败提示信息
 	 * 

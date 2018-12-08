@@ -1,5 +1,7 @@
 package com.wisdom.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +34,12 @@ public class ClazzServiceImpl implements ClazzService {
 	public Page<Classes> findByName(String name,Pageable page) {
 		// TODO Auto-generated method stub
 		return rep.findByNameLike(name,page);
+	}
+
+	@Override
+	public List<Classes> getAll() {
+		// TODO Auto-generated method stub
+		return rep.findAll();
 	}
 
 }
